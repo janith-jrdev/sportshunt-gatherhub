@@ -14,6 +14,9 @@ import UserType from "./pages/UserType";
 import PlayerDashboard from "./pages/PlayerDashboard";
 import OrganizerDashboard from "./pages/OrganizerDashboard";
 import NotFound from "./pages/NotFound";
+import Tournaments from "./pages/Tournaments";
+import PlayerTournaments from "./pages/PlayerTournaments";
+import TournamentCreation from "./pages/TournamentCreation";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +34,9 @@ const App = () => (
             <Route path="/user-type" element={<UserType />} />
             <Route path="/player-dashboard" element={<PlayerDashboard />} />
             <Route path="/organizer-dashboard" element={<OrganizerDashboard />} />
+            <Route path="/tournaments" element={<Tournaments />} />
+            <Route path="/player-tournaments" element={<PlayerTournaments />} />
+            <Route path="/tournament-creation" element={<TournamentCreation />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AnimatePresence>
