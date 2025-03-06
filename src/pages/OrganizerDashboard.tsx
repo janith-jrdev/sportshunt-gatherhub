@@ -86,6 +86,18 @@ const OrganizerDashboard = () => {
             </Button>
           </div>
           
+          <div className="bg-green-50 border border-green-200 p-4 rounded-lg mb-8">
+            <div className="flex items-start gap-3">
+              <div className="bg-green-100 p-2 rounded-full">
+                <Trophy className="h-5 w-5 text-green-600" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-green-800">GET.SET.HUNT</h3>
+                <p className="text-green-700 text-sm">Create and manage your tournaments, track participants, and oversee matches all in one place.</p>
+              </div>
+            </div>
+          </div>
+          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <Card>
               <CardHeader className="pb-2">
@@ -158,7 +170,12 @@ const OrganizerDashboard = () => {
                       </div>
                       
                       <div className="flex items-center gap-2 mt-4 md:mt-0">
-                        <Button variant="outline" size="sm" className="flex items-center gap-1">
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="flex items-center gap-1"
+                          onClick={() => navigate(`/tournament-management/${tournament.id}`)}
+                        >
                           <Eye className="h-4 w-4" />
                           <span className="hidden sm:inline">View</span>
                         </Button>
@@ -248,7 +265,12 @@ const OrganizerDashboard = () => {
                   <div className="p-6">
                     <div className="flex justify-between items-center mb-6">
                       <h2 className="text-xl font-semibold">Tournament Fixtures</h2>
-                      <Button variant="outline" size="sm" className="flex items-center gap-1">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="flex items-center gap-1"
+                        onClick={() => navigate(`/tournament-fixtures/1`)}
+                      >
                         <PlusCircle className="h-4 w-4" />
                         Add Fixture
                       </Button>
@@ -290,7 +312,11 @@ const OrganizerDashboard = () => {
                               </td>
                               <td className="py-3 px-4">
                                 <div className="flex items-center gap-2">
-                                  <Button variant="outline" size="sm">
+                                  <Button 
+                                    variant="outline" 
+                                    size="sm"
+                                    onClick={() => navigate(`/tournament-fixtures/${fixture.tournamentId}`)}
+                                  >
                                     <Eye className="h-4 w-4" />
                                   </Button>
                                   <Button variant="outline" size="sm">

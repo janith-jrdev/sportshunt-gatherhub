@@ -22,6 +22,8 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Info } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const formSchema = z.object({
   format: z.string().min(1, {
@@ -75,46 +77,128 @@ export function TournamentFormatForm({
             name="format"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Tournament Format</FormLabel>
+                <FormLabel className="flex items-center gap-2">
+                  Tournament Format
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Info className="h-4 w-4 text-muted-foreground" />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p className="max-w-xs">Choose how your tournament will be structured</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </FormLabel>
                 <FormControl>
                   <RadioGroup
                     onValueChange={field.onChange}
                     defaultValue={field.value}
-                    className="grid grid-cols-1 md:grid-cols-3 gap-4"
+                    className="grid grid-cols-1 gap-4"
                   >
-                    <FormItem className="flex flex-col items-center space-x-0 space-y-2 rounded-md border p-4 hover:bg-accent">
-                      <FormControl>
-                        <RadioGroupItem value="knockout" className="sr-only" />
-                      </FormControl>
-                      <FormLabel className="font-normal cursor-pointer">
-                        Knockout
-                      </FormLabel>
-                      <FormDescription className="text-center text-xs">
-                        Single elimination tournament
-                      </FormDescription>
-                    </FormItem>
-                    <FormItem className="flex flex-col items-center space-x-0 space-y-2 rounded-md border p-4 hover:bg-accent">
-                      <FormControl>
-                        <RadioGroupItem value="league" className="sr-only" />
-                      </FormControl>
-                      <FormLabel className="font-normal cursor-pointer">
-                        League / Round Robin
-                      </FormLabel>
-                      <FormDescription className="text-center text-xs">
-                        Everyone plays against everyone
-                      </FormDescription>
-                    </FormItem>
-                    <FormItem className="flex flex-col items-center space-x-0 space-y-2 rounded-md border p-4 hover:bg-accent">
-                      <FormControl>
-                        <RadioGroupItem value="both" className="sr-only" />
-                      </FormControl>
-                      <FormLabel className="font-normal cursor-pointer">
-                        Mixed Format
-                      </FormLabel>
-                      <FormDescription className="text-center text-xs">
-                        Group stage + knockout phase
-                      </FormDescription>
-                    </FormItem>
+                    <div className="space-y-4">
+                      <FormItem className="flex flex-col space-x-0 space-y-2 rounded-md border p-4 hover:bg-accent">
+                        <FormControl>
+                          <RadioGroupItem value="knockout" className="sr-only" />
+                        </FormControl>
+                        <div className="flex items-center justify-between">
+                          <FormLabel className="font-normal cursor-pointer">
+                            Knockout
+                          </FormLabel>
+                          <FormDescription className="text-xs">
+                            Single elimination tournament
+                          </FormDescription>
+                        </div>
+                        <div className="bg-muted/50 p-3 rounded-md">
+                          <div className="flex justify-center">
+                            <div className="flex flex-col">
+                              <div className="flex">
+                                <div className="border-r-2 border-primary h-8 w-8"></div>
+                                <div className="h-8 border-t-2 border-primary w-8"></div>
+                              </div>
+                              <div className="flex">
+                                <div className="border-r-2 border-primary h-8 w-8"></div>
+                                <div className="h-8 w-8"></div>
+                              </div>
+                              <div className="flex">
+                                <div className="border-r-2 border-primary h-8 w-8"></div>
+                                <div className="h-8 border-b-2 border-primary w-8"></div>
+                              </div>
+                            </div>
+                            <div className="w-8 border-t-2 border-b-2 border-r-2 border-primary flex items-center justify-center">
+                              <div className="w-2 h-2 rounded-full bg-primary"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </FormItem>
+
+                      <FormItem className="flex flex-col space-x-0 space-y-2 rounded-md border p-4 hover:bg-accent">
+                        <FormControl>
+                          <RadioGroupItem value="league" className="sr-only" />
+                        </FormControl>
+                        <div className="flex items-center justify-between">
+                          <FormLabel className="font-normal cursor-pointer">
+                            League / Round Robin
+                          </FormLabel>
+                          <FormDescription className="text-xs">
+                            Everyone plays against everyone
+                          </FormDescription>
+                        </div>
+                        <div className="bg-muted/50 p-3 rounded-md">
+                          <div className="grid grid-cols-4 gap-2 text-xs font-medium text-center">
+                            <div className="p-1"></div>
+                            <div className="p-1 bg-primary/10 rounded">Team A</div>
+                            <div className="p-1 bg-primary/10 rounded">Team B</div>
+                            <div className="p-1 bg-primary/10 rounded">Team C</div>
+                            
+                            <div className="p-1 bg-primary/10 rounded">Team A</div>
+                            <div className="p-1 bg-muted rounded">-</div>
+                            <div className="p-1 bg-green-100 rounded">2-1</div>
+                            <div className="p-1 bg-red-100 rounded">0-2</div>
+                            
+                            <div className="p-1 bg-primary/10 rounded">Team B</div>
+                            <div className="p-1 bg-red-100 rounded">1-2</div>
+                            <div className="p-1 bg-muted rounded">-</div>
+                            <div className="p-1 bg-green-100 rounded">2-0</div>
+                            
+                            <div className="p-1 bg-primary/10 rounded">Team C</div>
+                            <div className="p-1 bg-green-100 rounded">2-0</div>
+                            <div className="p-1 bg-red-100 rounded">0-2</div>
+                            <div className="p-1 bg-muted rounded">-</div>
+                          </div>
+                        </div>
+                      </FormItem>
+
+                      <FormItem className="flex flex-col space-x-0 space-y-2 rounded-md border p-4 hover:bg-accent">
+                        <FormControl>
+                          <RadioGroupItem value="both" className="sr-only" />
+                        </FormControl>
+                        <div className="flex items-center justify-between">
+                          <FormLabel className="font-normal cursor-pointer">
+                            Mixed Format
+                          </FormLabel>
+                          <FormDescription className="text-xs">
+                            Group stage + knockout phase
+                          </FormDescription>
+                        </div>
+                        <div className="bg-muted/50 p-3 rounded-md">
+                          <div className="flex flex-col items-center gap-2">
+                            <div className="grid grid-cols-3 gap-2 text-xs font-medium w-full">
+                              <div className="p-1 bg-primary/10 rounded text-center">Group A</div>
+                              <div className="p-1 bg-primary/10 rounded text-center">Group B</div>
+                              <div className="border-t-2 border-primary flex-1 mt-3"></div>
+                            </div>
+                            <div className="w-full border-r-2 border-primary h-4"></div>
+                            <div className="w-full flex justify-end">
+                              <div className="w-1/2 border-t-2 border-r-2 border-primary h-4"></div>
+                            </div>
+                            <div className="w-8 h-8 rounded-full border-2 border-primary flex items-center justify-center">
+                              <div className="w-2 h-2 rounded-full bg-primary"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </FormItem>
+                    </div>
                   </RadioGroup>
                 </FormControl>
                 <FormMessage />
