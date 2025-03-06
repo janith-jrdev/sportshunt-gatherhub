@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Navbar } from "@/components/layout/Navbar";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const tournaments = [
   {
@@ -61,12 +62,17 @@ const tournaments = [
 
 const PlayerTournaments = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
   
   const filteredTournaments = tournaments.filter(tournament => 
     tournament.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     tournament.sport.toLowerCase().includes(searchQuery.toLowerCase()) ||
     tournament.location.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const handleRegister = (tournament) => {
+    navigate("/tournament-registration", { state: { tournament } });
+  };
 
   return (
     <>
@@ -147,7 +153,12 @@ const PlayerTournaments = () => {
                     )}
                   </div>
                   
-                  <Button className="w-full">Register Now</Button>
+                  <Button 
+                    className="w-full"
+                    onClick={() => handleRegister(tournament)}
+                  >
+                    Register Now
+                  </Button>
                 </div>
               </Card>
             ))}

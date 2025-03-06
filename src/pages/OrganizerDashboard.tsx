@@ -2,9 +2,11 @@
 import { MainLayout } from "@/components/layout/MainLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Trophy, Users, PlusCircle, Calendar, Edit, Eye, BarChart } from "lucide-react";
+import { Trophy, Users, PlusCircle, Calendar, Edit, Eye, BarChart, Table, CheckCircle } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useNavigate } from "react-router-dom";
+import { Badge } from "@/components/ui/badge";
 
 const tournaments = [
   {
@@ -25,7 +27,45 @@ const tournaments = [
   },
 ];
 
+const fixtures = [
+  {
+    id: 1,
+    tournamentId: 1,
+    homeTeam: "Team Alpha",
+    awayTeam: "Team Bravo",
+    date: "June 15, 2023",
+    time: "10:00 AM",
+    location: "Court 1",
+    status: "Scheduled",
+    category: "Men's Open"
+  },
+  {
+    id: 2,
+    tournamentId: 1,
+    homeTeam: "Team Charlie",
+    awayTeam: "Team Delta",
+    date: "June 15, 2023",
+    time: "12:00 PM",
+    location: "Court 2",
+    status: "Scheduled",
+    category: "Men's Open"
+  },
+  {
+    id: 3,
+    tournamentId: 1,
+    homeTeam: "Team Echo",
+    awayTeam: "Team Foxtrot",
+    date: "June 16, 2023",
+    time: "10:00 AM",
+    location: "Court 1",
+    status: "Scheduled",
+    category: "Women's Open"
+  }
+];
+
 const OrganizerDashboard = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <Navbar />
@@ -37,7 +77,10 @@ const OrganizerDashboard = () => {
               <p className="text-muted-foreground mt-1">Manage your tournaments and participants</p>
             </div>
             
-            <Button className="flex items-center gap-2">
+            <Button 
+              className="flex items-center gap-2"
+              onClick={() => navigate("/tournament-creation")}
+            >
               <PlusCircle className="h-4 w-4" />
               Create Tournament
             </Button>
@@ -87,6 +130,7 @@ const OrganizerDashboard = () => {
               <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
               <TabsTrigger value="past">Past</TabsTrigger>
               <TabsTrigger value="drafts">Drafts</TabsTrigger>
+              <TabsTrigger value="fixtures">Fixtures</TabsTrigger>
             </TabsList>
             
             <TabsContent value="active" className="mt-0">
@@ -183,7 +227,7 @@ const OrganizerDashboard = () => {
                 </div>
                 <h3 className="text-lg font-medium mb-2">No upcoming tournaments</h3>
                 <p className="text-muted-foreground mb-4">You don't have any upcoming tournaments scheduled.</p>
-                <Button>Create Tournament</Button>
+                <Button onClick={() => navigate("/tournament-creation")}>Create Tournament</Button>
               </div>
             </TabsContent>
             
@@ -194,8 +238,86 @@ const OrganizerDashboard = () => {
                 </div>
                 <h3 className="text-lg font-medium mb-2">No past tournaments</h3>
                 <p className="text-muted-foreground mb-4">You haven't organized any tournaments yet.</p>
-                <Button>Create Tournament</Button>
+                <Button onClick={() => navigate("/tournament-creation")}>Create Tournament</Button>
               </div>
+            </TabsContent>
+
+            <TabsContent value="fixtures" className="mt-0">
+              {fixtures.length > 0 ? (
+                <Card>
+                  <div className="p-6">
+                    <div className="flex justify-between items-center mb-6">
+                      <h2 className="text-xl font-semibold">Tournament Fixtures</h2>
+                      <Button variant="outline" size="sm" className="flex items-center gap-1">
+                        <PlusCircle className="h-4 w-4" />
+                        Add Fixture
+                      </Button>
+                    </div>
+
+                    <div className="overflow-x-auto">
+                      <table className="w-full border-collapse">
+                        <thead>
+                          <tr className="border-b">
+                            <th className="text-left py-3 px-4 font-medium">Match</th>
+                            <th className="text-left py-3 px-4 font-medium">Date & Time</th>
+                            <th className="text-left py-3 px-4 font-medium">Location</th>
+                            <th className="text-left py-3 px-4 font-medium">Category</th>
+                            <th className="text-left py-3 px-4 font-medium">Status</th>
+                            <th className="text-left py-3 px-4 font-medium">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {fixtures.map((fixture) => (
+                            <tr key={fixture.id} className="border-b hover:bg-muted/50">
+                              <td className="py-3 px-4">
+                                <div className="font-medium">{fixture.homeTeam} vs {fixture.awayTeam}</div>
+                              </td>
+                              <td className="py-3 px-4">
+                                <div>{fixture.date}</div>
+                                <div className="text-sm text-muted-foreground">{fixture.time}</div>
+                              </td>
+                              <td className="py-3 px-4">{fixture.location}</td>
+                              <td className="py-3 px-4">
+                                <Badge variant="outline">{fixture.category}</Badge>
+                              </td>
+                              <td className="py-3 px-4">
+                                <Badge 
+                                  variant={fixture.status === "Completed" ? "default" : 
+                                          fixture.status === "In Progress" ? "secondary" : "outline"}
+                                >
+                                  {fixture.status}
+                                </Badge>
+                              </td>
+                              <td className="py-3 px-4">
+                                <div className="flex items-center gap-2">
+                                  <Button variant="outline" size="sm">
+                                    <Eye className="h-4 w-4" />
+                                  </Button>
+                                  <Button variant="outline" size="sm">
+                                    <Edit className="h-4 w-4" />
+                                  </Button>
+                                  <Button variant="outline" size="sm">
+                                    <CheckCircle className="h-4 w-4" />
+                                  </Button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </Card>
+              ) : (
+                <div className="flex flex-col items-center justify-center py-12 text-center">
+                  <div className="h-16 w-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                    <Table className="h-8 w-8 text-muted-foreground" />
+                  </div>
+                  <h3 className="text-lg font-medium mb-2">No fixtures available</h3>
+                  <p className="text-muted-foreground mb-4">You haven't created any fixtures yet.</p>
+                  <Button>Create Fixtures</Button>
+                </div>
+              )}
             </TabsContent>
           </Tabs>
         </div>

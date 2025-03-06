@@ -15,17 +15,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 
 const categorySchema = z.object({
   gender: z.string().min(1, {
-    message: "Please select a gender category.",
+    message: "Please enter a gender category.",
   }),
   ageGroup: z.string().min(1, {
     message: "Please enter an age group.",
@@ -56,7 +50,7 @@ export function TournamentCategoriesForm({
   onBack 
 }: TournamentCategoriesFormProps) {
   const [currentCategories, setCurrentCategories] = useState<Category[]>(
-    categories.length > 0 ? categories : [{ id: "1", gender: "", ageGroup: "", name: "" }]
+    categories.length > 0 ? categories : []
   );
 
   const form = useForm<z.infer<typeof categorySchema>>({
@@ -132,19 +126,9 @@ export function TournamentCategoriesForm({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Gender Category</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select gender category" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="Men">Men</SelectItem>
-                      <SelectItem value="Women">Women</SelectItem>
-                      <SelectItem value="Mixed">Mixed</SelectItem>
-                      <SelectItem value="Open">Open (All genders)</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <FormControl>
+                    <Input placeholder="E.g. Men, Women, Mixed, Open" {...field} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -156,22 +140,9 @@ export function TournamentCategoriesForm({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Age Group</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select age group" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="Under 12">Under 12</SelectItem>
-                      <SelectItem value="Under 16">Under 16</SelectItem>
-                      <SelectItem value="Under 18">Under 18</SelectItem>
-                      <SelectItem value="18-25">18-25</SelectItem>
-                      <SelectItem value="26-35">26-35</SelectItem>
-                      <SelectItem value="36+">36+</SelectItem>
-                      <SelectItem value="Open">Open (All ages)</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <FormControl>
+                    <Input placeholder="E.g. Under 18, 18-25, 26-35, Open" {...field} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
