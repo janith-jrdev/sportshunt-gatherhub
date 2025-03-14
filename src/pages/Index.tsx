@@ -1,27 +1,88 @@
 
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import { useEffect } from "react";
 import { Navbar } from "@/components/layout/Navbar";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Award, MapPin, Calendar, Users } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Footer } from "@/components/layout/Footer";
+import { BannerSlider } from "@/components/home/BannerSlider";
+import { FeaturedProducts } from "@/components/home/FeaturedProducts";
+import { CategoryHighlight } from "@/components/home/CategoryHighlight";
+import { FeatureSection } from "@/components/home/FeatureSection";
+import { Testimonials } from "@/components/home/Testimonials";
 
-// Animation variants
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.3,
-    },
+// Sample data for slider
+const banners = [
+  {
+    id: 1,
+    image: "https://images.unsplash.com/photo-1622040806062-07e27aca83e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80",
+    title: "Diwali Sale: 30% Off Almonds!",
+    description: "Celebrate the festival of lights with premium California almonds. Limited time offer.",
+    link: "/category/dry-fruits",
   },
-};
+  {
+    id: 2,
+    image: "https://images.unsplash.com/photo-1596097635121-14b43daa686b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80",
+    title: "Spice Up Your Cooking",
+    description: "Explore our premium selection of authentic Indian spices sourced directly from farms.",
+    link: "/category/spices",
+  },
+  {
+    id: 3,
+    image: "https://images.unsplash.com/photo-1609525313344-a56f580b9096?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80",
+    title: "Wholesale Deals for Businesses",
+    description: "Special bulk pricing for restaurants, caterers, and retailers. Save more when you buy more.",
+    link: "/category/wholesale",
+  },
+];
 
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
-};
+// Sample data for categories
+const categories = [
+  {
+    id: "dry-fruits",
+    name: "Dry Fruits",
+    description: "Premium nuts and dried fruits from around the world",
+    image: "https://images.unsplash.com/photo-1546383644-6e3fdae07ad9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+    link: "/category/dry-fruits",
+  },
+  {
+    id: "spices",
+    name: "Spices",
+    description: "Authentic spices to enhance your culinary creations",
+    image: "https://images.unsplash.com/photo-1532336414038-cf19250c5757?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+    link: "/category/spices",
+  },
+  {
+    id: "wholesale",
+    name: "Wholesale",
+    description: "Bulk quantities at special prices for businesses",
+    image: "https://images.unsplash.com/photo-1579113800032-c38bd7635818?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+    link: "/category/wholesale",
+  },
+];
+
+// Sample testimonials
+const testimonials = [
+  {
+    id: "1",
+    name: "Priya Sharma",
+    location: "Mumbai",
+    rating: 5,
+    comment: "The quality of dry fruits from Niraa is exceptional. I've been ordering from them for over a year and have never been disappointed. Their packaging ensures freshness every time.",
+  },
+  {
+    id: "2",
+    name: "Arjun Patel",
+    location: "Delhi",
+    rating: 4,
+    comment: "Great variety of spices, all authentic and aromatic. The Kashmir saffron is definitely worth the premium price. Fast delivery and good customer service.",
+  },
+  {
+    id: "3",
+    name: "Meera Reddy",
+    location: "Bangalore",
+    rating: 5,
+    comment: "I ordered a gift box for Diwali, and it was beautifully packaged. Everyone loved the selection of dry fruits and the personalized message. Will definitely order again!",
+  },
+];
 
 const Index = () => {
   useEffect(() => {
@@ -29,181 +90,39 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Navbar />
       
-      {/* Hero Section */}
-      <section className="pt-32 pb-16 md:pt-40 md:pb-24">
-        <div className="container px-4 mx-auto">
-          <div className="max-w-4xl mx-auto text-center">
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="text-4xl md:text-6xl font-bold mb-6 leading-tight"
-            >
-              Find Sports Tournaments Near{" "}
-              <span className="text-primary">You</span>
-            </motion.h1>
-            
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto"
-            >
-              Discover local sports events, register for tournaments, or organize your own competitions with SportsHunt.
-            </motion.p>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-col sm:flex-row gap-4 justify-center"
-            >
-              <Link to="/signup">
-                <Button size="lg" className="px-8 py-6 text-base">
-                  Get Started
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-              <Link to="/tournaments">
-                <Button size="lg" variant="outline" className="px-8 py-6 text-base">
-                  Browse Tournaments
-                </Button>
-              </Link>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      {/* Main Content */}
+      <main className="flex-1">
+        {/* Hero Section with Banner Slider */}
+        <section className="pt-16 md:pt-20">
+          <BannerSlider banners={banners} />
+        </section>
+        
+        {/* Feature Icons */}
+        <FeatureSection />
+        
+        {/* Featured Products */}
+        <FeaturedProducts 
+          title="Best Sellers" 
+          subtitle="Our most popular products based on sales. Updated weekly." 
+        />
+        
+        {/* Category Highlight */}
+        <CategoryHighlight categories={categories} />
+        
+        {/* New Arrivals */}
+        <FeaturedProducts 
+          title="New Arrivals" 
+          subtitle="Check out our latest additions to the Niraa collection." 
+        />
+        
+        {/* Testimonials */}
+        <Testimonials testimonials={testimonials} />
+      </main>
       
-      {/* Features Section */}
-      <section className="py-16 md:py-24 bg-gray-50">
-        <div className="container px-4 mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={containerVariants}
-            className="max-w-3xl mx-auto text-center mb-16"
-          >
-            <motion.h2 variants={itemVariants} className="text-3xl md:text-4xl font-bold mb-4">
-              Why Choose SportsHunt?
-            </motion.h2>
-            <motion.p variants={itemVariants} className="text-lg text-muted-foreground">
-              We make finding and organizing sports tournaments simple and efficient.
-            </motion.p>
-          </motion.div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100"
-            >
-              <div className="bg-primary/10 w-12 h-12 rounded-full flex items-center justify-center mb-6">
-                <MapPin className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="text-xl font-medium mb-3">Local Events</h3>
-              <p className="text-muted-foreground">
-                Discover sports tournaments happening in your area with our smart location-based search.
-              </p>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100"
-            >
-              <div className="bg-primary/10 w-12 h-12 rounded-full flex items-center justify-center mb-6">
-                <Calendar className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="text-xl font-medium mb-3">Easy Organization</h3>
-              <p className="text-muted-foreground">
-                Create, manage, and promote your tournaments with our comprehensive toolkit.
-              </p>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 0.2, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100"
-            >
-              <div className="bg-primary/10 w-12 h-12 rounded-full flex items-center justify-center mb-6">
-                <Users className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="text-xl font-medium mb-3">Community</h3>
-              <p className="text-muted-foreground">
-                Connect with other sports enthusiasts and build your network of players and organizers.
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-      
-      {/* CTA Section */}
-      <section className="py-16 md:py-24">
-        <div className="container px-4 mx-auto">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-4xl mx-auto text-center p-8 md:p-12 bg-primary/5 rounded-3xl border border-primary/20"
-          >
-            <Award className="h-12 w-12 text-primary mx-auto mb-6" />
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Ready to Join the Community?
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Whether you're looking to compete or organize, SportsHunt has everything you need to get started.
-            </p>
-            <Link to="/signup">
-              <Button size="lg" className="px-8 py-6 text-base">
-                Create Your Account
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-      
-      {/* Footer */}
-      <footer className="py-12 bg-gray-50">
-        <div className="container px-4 mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex items-center gap-2 mb-4 md:mb-0">
-              <Award className="h-6 w-6 text-primary" />
-              <span className="text-lg font-semibold">SportsHunt</span>
-            </div>
-            
-            <div className="flex flex-wrap justify-center gap-8">
-              <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                About
-              </a>
-              <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                Features
-              </a>
-              <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                Terms
-              </a>
-              <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                Privacy
-              </a>
-            </div>
-          </div>
-          
-          <div className="mt-8 pt-8 border-t border-gray-200 text-center text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} SportsHunt. All rights reserved.
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

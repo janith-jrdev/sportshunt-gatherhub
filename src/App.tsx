@@ -23,6 +23,13 @@ import TournamentFixtures from "./pages/TournamentFixtures";
 import TournamentTeams from "./pages/TournamentTeams";
 import TournamentScoring from "./pages/TournamentScoring";
 
+// E-commerce Pages (to be implemented later)
+// import ProductDetail from "./pages/ProductDetail";
+// import Cart from "./pages/Cart";
+// import Checkout from "./pages/Checkout";
+// import UserDashboard from "./pages/UserDashboard";
+// import CategoryPage from "./pages/CategoryPage";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -47,6 +54,14 @@ const App = () => (
             <Route path="/tournament-fixtures/:id" element={<TournamentFixtures />} />
             <Route path="/tournament-teams/:id" element={<TournamentTeams />} />
             <Route path="/tournament-scoring/:id/:matchId" element={<TournamentScoring />} />
+            
+            {/* E-commerce Routes (uncomment when implementing) */}
+            {/* <Route path="/product/:id" element={<ProductDetail />} /> */}
+            {/* <Route path="/cart" element={<Cart />} /> */}
+            {/* <Route path="/checkout" element={<Checkout />} /> */}
+            {/* <Route path="/user-dashboard" element={<UserDashboard />} /> */}
+            {/* <Route path="/category/:slug" element={<CategoryPage />} /> */}
+            
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AnimatePresence>
